@@ -42,6 +42,4 @@ public class Product {
 				.path(imageUrl)
 				.toUriString();
 	}
-	
-	}
 }
