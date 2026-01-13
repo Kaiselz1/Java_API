@@ -1,26 +1,35 @@
-# -------- Stage 1: Build the jar using Gradle --------
-FROM gradle:8.3-jdk17 AS build
+# -------- Stage 1: Build (JDK 21) --------
+FROM eclipse-temurin:21-jdk AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy project files
-COPY --chown=gradle:gradle . .
+# Copy Gradle wrapper and config first (for caching)
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle settings.gradle ./
 
-# Build the jar (skip tests for faster build, remove --no-daemon if you prefer)
-RUN gradle clean build -x test --no-daemon
+# Make gradlew executable
+RUN chmod +x gradlew
 
-# -------- Stage 2: Run the jar --------
-FROM eclipse-temurin:17-jre
+# Download dependencies (cached layer)
+RUN ./gradlew dependencies --no-daemon
 
-# Set working directory
+# Copy source code
+COPY src src
+
+# Build Spring Boot jar (skip tests)
+RUN ./gradlew clean bootJar -x test --no-daemon
+
+# -------- Stage 2: Runtime (JRE 21) --------
+FROM eclipse-temurin:21-jre
+
 WORKDIR /app
 
-# Copy the jar from the build stage
+# Copy jar from build stage
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Expose the port (Render uses PORT env variable)
+# Render uses PORT env var
 EXPOSE 8080
 
-# Run the jar
+# Start application
 CMD ["java", "-jar", "app.jar"]
