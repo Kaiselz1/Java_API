@@ -1,0 +1,14 @@
+# 1. Use a lightweight Java runtime
+FROM eclipse-temurin:17-jre
+
+# 2. Create app directory
+WORKDIR /app
+
+# 3. Copy jar file
+COPY target/*.jar app.jar
+
+# 4. Expose port (Render ignores this but it's good practice)
+EXPOSE 8080
+
+# 5. Run the jar
+CMD ["java", "-jar", "app.jar"]
