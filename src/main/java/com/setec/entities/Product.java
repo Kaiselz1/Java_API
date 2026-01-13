@@ -3,6 +3,7 @@ package com.setec.entities;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class Product {
 		return price*qty;
 	}
 	
+	@JsonProperty("fullImageUrl")
 	public String getFullImageUrl() {
 		// change when on Local
 //		return ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()+imageUrl;
