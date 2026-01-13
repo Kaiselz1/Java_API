@@ -15,7 +15,8 @@ public class MyConfi implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**")
-				.addResourceLocations("file:./myApp/static/");
+				.addResourceLocations("file:./app/uploads/");
+//				.addResourceLocations("file:./myApp/static/");
 				//.addResourceLocations("file:/opt/myApp/static/"); for Linux
 	}
 	
