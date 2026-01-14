@@ -37,11 +37,11 @@ public class Product {
 	@JsonProperty("fullImageUrl")
 	public String getFullImageUrl() {
 		// change when on Local
-//		return ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()+imageUrl;
+		return ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()+imageUrl;
 		
-		if (imageUrl == null || imageUrl.isBlank()) return null;
-		return ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path(imageUrl)
-				.toUriString();
+//		if (imageUrl == null || imageUrl.isBlank()) return null;
+//		return ServletUriComponentsBuilder.fromCurrentContextPath()
+//				.path(imageUrl)
+//				.toUriString();
 	}
 }
